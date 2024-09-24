@@ -1,5 +1,4 @@
 # pages /analytics.py
-
 from dash import html, dcc
 
 layout = html.Div([

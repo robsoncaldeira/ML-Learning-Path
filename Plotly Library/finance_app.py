@@ -27,33 +27,37 @@ print(new_path)
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 
 # Layout do aplicativo
-app.layout = html.Div([
-    dcc.Location(id='url', refresh=False),
-    dbc.NavbarSimple(
-        brand="Análise de Tickers",
-        brand_href="/",
-        color="primary",
-        dark=True,
-    ),
-    dbc.NavItem(dbc.NavLink("Home", href="/")),
-    dbc.NavItem(dbc.NavLink("Analytics", href="/analytics")),
-    dbc.NavItem(dbc.NavLink("Archive", href="/archive"))
-])
+app.layout = html.Div(
+    [
+        dcc.Location(id="url", refresh=False),
+        dbc.NavbarSimple(
+            brand="Análise de Tickers",
+            brand_href="/",
+            color="primary",
+            dark=True,
+        ),
+        dbc.NavItem(dbc.NavLink("Home", href="/")),
+        dbc.NavItem(dbc.NavLink("Analytics", href="/analytics")),
+        dbc.NavItem(dbc.NavLink("Archive", href="/archive")),
+    ]
+)
 
 
 # Callback para renderizar as páginas
 # Callback para renderizar as páginas
-@app.callback(Output('page-content', 'children'), Input('url', 'pathname'))
+@app.callback(Output("page-content", "children"), Input("url", "pathname"))
 def display_page(pathname):
-    if pathname == '/analytics':
+    if pathname == "/analytics":
         from pages.analytics import layout
+
         return layout
-    elif pathname == '/archive':
+    elif pathname == "/archive":
         return create_archive_layout(app)  # Chame a função para obter o layout
     else:
         from pages.home import layout
+
         return layout
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     app.run_server(debug=True)
